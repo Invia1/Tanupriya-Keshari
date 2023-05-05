@@ -13,8 +13,6 @@ class FullName {
         Console.WriteLine("Display value of Name :- {0} "
                           + "Surname :- {1}", name, surname);
     }
-  
-
     static public void Main()
     {
         FullName ob = new FullName("Tanupriya", "Keshari");
