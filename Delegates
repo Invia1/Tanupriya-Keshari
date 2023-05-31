@@ -1,0 +1,122 @@
+using System;
+using System.Security.Cryptography.X509Certificates;
+
+delegate void MyMath1(int a,int b);
+delegate void MyMath2(int a,int b,int c);
+delegate string  MyString(string a, string b, string c);
+delegate void MyStatement();
+class Program
+{
+    public void Add(int x,int y)
+    {
+        int add=x+y;
+        Console.WriteLine(add);
+    }
+
+    public void Subtract(int x, int y,int z)
+    {
+        int sub = x - y - z;
+        Console.WriteLine(sub);
+    }
+
+    public void Division(int x, int y,int z)
+    {
+        int div = x / y / z;
+        Console.WriteLine(div);
+
+    }
+
+    public int Multiplication(int w,int x, int y,int z)
+    {
+        int m = x * y * z;
+        return m;
+    }
+
+    public void AreaOfRectangle(int x,int y)
+    {
+        int areaOfRectangle = x * y;
+        Console.WriteLine(areaOfRectangle);
+          
+    }
+
+    public bool checkNumber(int x)
+    {
+        if (x >= 0) return true;
+        return false;
+    }
+
+    public void firstStatement(MyStatement s)
+    {
+        Console.Write( "1.Delegate is pointer to function");
+        s();
+    }
+
+    public void secondStatment()
+    {
+        Console.WriteLine( "\n2.Object is a pointer to class");
+       
+    }
+}
+class Results
+{
+    public static void Main()
+    {
+
+        Console.WriteLine("\n\t\t--Assignment based on Delegates,its different types,lambda expression and Callback--\n\n");
+        //SingleCasting
+        Program program = new Program();
+        MyMath1 maths1 = new MyMath1(program.Add);
+        Console.WriteLine("Addition of 10 and 15 is : ");
+        maths1(10, 15);
+
+
+        //MultiCasting
+        MyMath2 maths2 = new MyMath2(program.Subtract);
+        Console.WriteLine("Subtraction of 85 ,20 and 15 is : ");
+        maths2(85,20,15);
+        maths2 = null;  //to remove the reference of Subtract Function
+
+        Console.WriteLine("Division of 100 ,10 and 2 is : ");
+        maths2 += program.Division;
+        maths2(100, 10, 2);
+
+        //Func Delegate
+        Func<int, int, int, int, int> mult = program.Multiplication;
+        var m = mult(2, 3, 4, 5);
+        Console.WriteLine("Multiplication of 2,3,4and 5 is: ");
+        Console.WriteLine(m);
+
+
+        //Action Delegate
+        Action<int, int> area = program.AreaOfRectangle;
+        Console.WriteLine("Area of Rectangle of 5 * 9 is: ");
+        area(5, 9);
+
+        //Predicate
+        Predicate<int> cn = program.checkNumber;
+        Console.WriteLine("Return True if number is greater than zero: Number is :10  ");
+        var c = cn(10);
+        Console.WriteLine(c);
+
+        //Anonymous Method
+        MyString names = delegate (string a, string b, string d)
+        {
+            a = "Invia";
+            b = "Training";
+            d = "Center";
+            return a + b + d;
+        };
+
+        //Lamda Expression
+
+        MyMath1 areaOfSquare = (int a, int b) =>
+        {
+            int x = a + b;
+            Console.WriteLine("Area of Square is : "+x);
+        };
+
+        //Callback
+        Console.WriteLine("Important Statements--- ");
+        program.firstStatement(program.secondStatment);
+    }
+}
